@@ -1,0 +1,3 @@
+The heater elements are actually connected to the ground and output of the L7812 +12v regulator.  
+
+The gschem model omits these connections, for simplicity.    

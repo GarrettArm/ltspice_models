@@ -1,0 +1,36 @@
+Note:	When Vg swings to -1v, and the Vs is 2v or more:
+		the JFet clamps off.   the signal distorts.
+
+
+Note:   68kOhm resistor between the signal and the Jfet was removed 
+		(and can be replaced).
+		220pF cap from JFet to Ground also removed.
+	
+Note:   Resistor from Source to Ground may be 100K to 1Meg.
+		=Input inpedence
+		Lower values may reduce gain.
+		Higher values may cause oscillations.
+		May alter it to match source's output impedence.
+
+Note: 	2N3819 can handle up to 50mA of through current.
+		Rs + Rd = 9v / (less then 50mA)
+		Rs + Rd = 9/.05
+		Rs + Rd = 180 Ohms minimum
+
+
+
+MPF102  Vp=  	-3.27v
+	Idss=	5.6mA (?)
+
+Rs + Rd >= 9v/5.6mA
+	>= 1610 Ohms
+
+Rs = 25% of Rs+Rd
+   >= 400 Ohms
+
+Rd = Rs+Rd - Rs
+   >= 1610 - 400
+   >= 1200 Ohms
+
+
+

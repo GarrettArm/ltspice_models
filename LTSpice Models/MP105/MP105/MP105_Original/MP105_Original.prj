@@ -1,0 +1,10 @@
+[GMANAGER]
+VERSION = "20060123"
+
+[PROJECT]
+AUTHOR = "Linus"
+DESC = ""
+
+[FILES]
+FILE = "MP105_Original.sch", ""
+

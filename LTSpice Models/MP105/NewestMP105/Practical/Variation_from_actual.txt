@@ -1,0 +1,9 @@
+Tube:
+     The heater elements are actually connected to the ground and output of the L7812 +12v regulator.  
+
+     The gschem model omits these connections, for simplicity.    
+
+Potentiometers:
+     Since there is no working Potentiometer .subckt file, the two pots are replaced with four resistors (two each).
+
+     The wiper attaches between the two resistors.  R1 + R2 = 500K, because the pot = 500K.  

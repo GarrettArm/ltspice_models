@@ -1,0 +1,79 @@
+* Vacuum Tube Modeling Package Vol. 1
+*
+* Library file LAMPES.LIB, version 1.3
+*
+* Version 1.2 June 1995
+* Version 1.3 January 2000
+*
+*
+* AUTHOR: Charles RYDEL
+*
+*
+* Corrections for version 1.3 by Frédéric Broydé
+*
+* Edited and Published by: EXCEM S.A.
+*
+*
+* Copyright EXCEM, 1995, 2000
+*
+* EXCEM
+* 12, chemin des Hauts de Clairefontaine
+* 78580 MAULE
+* FRANCE
+* tel: 33 1 34 75 13 65 fax: 33 1 34 75 13 66
+* email at : fredbroyde@excem.fr
+*
+*
+
+
+******************
+.SUBCKT 6L6WGT 1 2 3 4
+* Anode G2 G1 Cathode
+X1 1 2 3 4 TETRO2 G=.924m MU=140 MU12=7.71 k1=200 k2=4 k3=0 k4=7.9 k5=64.8 k6=26.3 K7=20U K8=2.5 K=0.036m
+X2 3 4 Igrid ALPHA=.2m BETA=2U
+C1 1 4 9.5p
+C2 3 1 .9p
+C3 3 4 11.5p
+RF1 1 4 200MEG
+RF2 3 4 50MEG
+RF3 2 4 100MEG
+.ENDS
+
+
+
+**********************
+**MODELLI MATEMATICI**
+**********************
+
+******************
+.SUBCKT TETRO2 A G2 G1 C
+
+* Terme d'ecran
+B1 10 0 V=IF(V(A,C)>0,(V(G2,C)/{MU12})*(V(A,C)-({k3}*V(G1,C)))/((V(G2,C)/{k1})+V(A,C)),0)
+
+* Total
+B2 11 0 V={G}*((V(G1,C)+V(10,0))+(V(A,C)/({MU}*(1-(V(G1,C)/{k2})))))**1.5
+
+* Rajout de la caracteristique de saturation a faible tension
+B3 A C I=IF(({K7}*(V(A,C)**{K8}))>V(11,0),V(11,0),IF(V(A,C)>0,({K7}*(V(A,C)**{K8})),0))
+
+* Calcul du courant d'ecran
+B6 12 0 V=IF(V(G2,C)>0,(V(G1,C)+(V(G2,C)/{k4})),0)
+B7 G2 C I={K}*(V(12,0)**1.5)*((V(A,C)+{k5})/(V(A,C)+{k6}))**3
+.ENDS
+
+******************
+.SUBCKT Igrid G1 C
+* Courant grille
+B4 6 0 V=IF(V(G1,C)>0,{ALPHA}*V(G1,C)**1.5,{BETA}/-(V(G1,C)-.1))
+B5 G1 C I=V(6,0)
+.ENDS
+
+******************
+.SUBCKT VALVE1 A1 A2 C
+B1 1 0 V=IF(V(A1,C)>0,{G}*(V(A1,C)),0)
+B2 2 0 V=IF(V(A2,C)>0,{G}*(V(A2,C)),0)
+B3 A1 C I=V(1,0)**1.5
+B4 A2 C I=V(2,0)**1.5
+R1 C 0 1MEG
+.ENDS
